@@ -21,7 +21,7 @@ npm install simple-background-remover onnxruntime-web
 ### Via CDN (for direct browser use)
 ```html
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/bewithdhanu/simple-background-remover/main.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/bewithdhanu/simple-background-remover/main.min.js"></script>
 ```
 
 ## Usage
