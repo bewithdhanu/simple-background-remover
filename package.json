@@ -1,9 +1,9 @@
 {
   "name": "simple-background-remover",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Remove image backgrounds in the browser using ONNX models and onnxruntime-web.",
-  "main": "index.js",
-  "module": "index.js",
+  "main": "main.js",
+  "module": "main.js",
   "types": "index.d.ts",
   "keywords": [
     "background-removal",

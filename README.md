@@ -21,7 +21,7 @@ npm install simple-background-remover onnxruntime-web
 ### Via CDN (for direct browser use)
 ```html
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
-<script src="https://unpkg.com/simple-background-remover/dist/SimpleBackgroundRemover.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/bewithdhanu/simple-background-remover/main.js"></script>
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ npm install simple-background-remover onnxruntime-web
 ### In the Browser (CDN)
 ```html
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
-<script src="path/to/SimpleBackgroundRemover.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/bewithdhanu/simple-background-remover/main.min.js"></script>
 <script>
   const remover = new window.SimpleBackgroundRemover();
   remover.onProgress = (percent, message) => {
