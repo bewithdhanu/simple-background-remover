@@ -1,6 +1,6 @@
 {
   "name": "simple-background-remover",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Remove image backgrounds in the browser using ONNX models and onnxruntime-web.",
   "main": "index.js",
   "module": "index.js",
@@ -20,6 +20,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/simple-background-remover"
+    "url": "https://github.com/bewithdhanu/simple-background-remover"
   }
 } 

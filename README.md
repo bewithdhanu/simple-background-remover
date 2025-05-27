@@ -1,3 +1,5 @@
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-blue?logo=github)](https://github.com/bewithdhanu/simple-background-remover)
+
 # Simple Background Remover
 
 Remove image backgrounds in the browser using ONNX models and [onnxruntime-web](https://www.npmjs.com/package/onnxruntime-web). Fast, easy, and privacy-friendly—no server upload required!
