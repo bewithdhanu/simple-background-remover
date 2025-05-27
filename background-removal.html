@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Background Remover Demo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/onnxruntime-web/1.14.0/ort.min.js"></script>
+    <script src="SimpleBackgroundRemover.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 40px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .row {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .col {
+            flex: 1;
+            text-align: center;
+        }
+        img, canvas {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+            background: #fff;
+        }
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .loading {
+            text-align: center;
+            margin: 20px 0;
+            color: #ffe082;
+        }
+        .progress-container {
+            display: none;
+            max-width: 400px;
+            margin: 0 auto 20px auto;
+        }
+        .progress-bar {
+            height: 10px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            width: 0%;
+            border-radius: 10px;
+        }
+        .progress-text {
+            margin-top: 8px;
+            text-align: center;
+            font-size: 15px;
+            color: #ffe082;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Simple Background Remover</h1>
+        <div class="controls">
+            <input type="file" id="fileInput" accept="image/*">
+            <button class="btn" id="removeBtn" disabled>Remove Background</button>
+        </div>
+        <div class="loading" id="loading" style="display:none;">Processing...</div>
+        <div class="progress-container" style="display:none; max-width:400px; margin:0 auto 20px auto;">
+            <div class="progress-bar" id="progressBar" style="height:10px; background:linear-gradient(45deg,#4CAF50,#45a049); width:0%; border-radius:10px;"></div>
+            <div class="progress-text" id="progressText" style="margin-top:8px; text-align:center; font-size:15px; color:#ffe082;"></div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>Original</h3>
+                <img id="originalImg" style="max-width:300px;">
+            </div>
+            <div class="col">
+                <h3>Background Removed</h3>
+                <div id="resultArea"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+    let remover = new SimpleBackgroundRemover();
+    let inputImg = null;
+
+    // Progress UI
+    const progressContainer = document.querySelector('.progress-container');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+
+    remover.onProgress = (percent, message) => {
+        progressContainer.style.display = 'block';
+        progressBar.style.width = percent + '%';
+        progressText.textContent = message;
+        if (percent >= 100) {
+            setTimeout(() => { progressContainer.style.display = 'none'; }, 1200);
+        }
+    };
+
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const img = new Image();
+        img.onload = () => {
+            inputImg = img;
+            document.getElementById('originalImg').src = img.src;
+            document.getElementById('removeBtn').disabled = false;
+            document.getElementById('resultArea').innerHTML = '';
+        };
+        img.src = URL.createObjectURL(file);
+    });
+
+    document.getElementById('removeBtn').addEventListener('click', async function() {
+        if (!inputImg) return;
+        this.disabled = true;
+        document.getElementById('loading').style.display = 'block';
+        try {
+            const img = await remover.removeBackground(inputImg);
+            document.getElementById('resultArea').innerHTML = '';
+            document.getElementById('resultArea').appendChild(img);
+        } catch (err) {
+            alert('Error: ' + err.message);
+        }
+        document.getElementById('loading').style.display = 'none';
+        this.disabled = false;
+    });
+    </script>
+</body>
+</html>
